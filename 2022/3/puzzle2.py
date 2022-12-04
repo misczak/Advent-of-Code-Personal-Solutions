@@ -21,18 +21,32 @@ def read_file(filepath, priority_dictionary):
 
             counter = 0
             for line in f:
-                print("line is " + line.strip())
                 rucksack_list.append(line.strip())
                 # Get the length of the line and divide it into its two equal sized compartments
 
                 # After we have a set of 3 lines in the list, start comparing them
                 if counter == 2:
-                    for first_item in rucksack_list[0]:
-                        for second_item in rucksack_list[1]:
-                            for third_item in rucksack_list[2]:
-                                if first_item == second_item and second_item == third_item:
-                                    common_item = first_item
-                                    break
+
+                    first_set = {1}
+                    second_set = {2}
+                    third_set = {3} 
+
+                    for item in rucksack_list[0]:
+                        first_set.add(item)
+                    
+                    for item in rucksack_list[1]:
+                        second_set.add(item)
+
+                    for item in rucksack_list[2]:
+                        third_set.add(item)
+
+                    # Get intersections of first and second lines, then second and third lines, then take
+                    # the intersection of those intersections
+                    first_intersection = first_set.intersection(second_set)
+                    second_intersection = second_set.intersection(third_set)
+                    final_intersection = first_intersection.intersection(second_intersection)
+
+                    common_item = "".join(final_intersection)
                     priority_sum += priority_dictionary[common_item]
 
                     # Clean up the list and counter for the next iteration

@@ -24,14 +24,18 @@ def read_file(filepath, priority_dictionary):
                 compartment_size = int(line_length / 2)
                 first_compartment = line[0:compartment_size]
                 second_compartment = line[compartment_size:-1]
+                
+                # Set up two sets and then fill them with unique items from each compartment
+                first_set = {1}
+                second_set = {2}
+                for i in first_compartment:
+                    first_set.add(i)
+                
+                for i in second_compartment:
+                    second_set.add(i)
 
-                # Loop through and compare items in both compartments
-                # When a match is found, mark that as the common item 
-                for item in first_compartment:
-                    for other_item in second_compartment:
-                        if item == other_item:
-                            common_item = item
-                            break
+                # Turn the set intersection result into a string
+                common_item = "".join(first_set.intersection(second_set))
 
                 # Add the priority of the common item to the running total 
                 priority_sum += priority_dictionary[common_item]
